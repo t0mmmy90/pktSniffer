@@ -8,3 +8,5 @@ To build:
 
 Usage:
 ./pktReader -i interfaceName
+
+Need to be run as root to open raw socket!

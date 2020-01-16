@@ -9,23 +9,29 @@ struct CliConfig {
 };
 
 void printUsage() {
-    std::cout << "Usage: -i interface" << std::endl;
+    std::cout << "Usage:" << std::endl << "-i interface - sniff on interface" << std::endl <<
+    "-h - print this help" << std::endl;
 }
 
 CliConfig getCliConfig(int argc, char** argv) {
     CliConfig cliConfig;
-    int opt {};
-    while ((opt = getopt(argc, argv, "i:")) != EOF) {
-        switch (opt) {
-            case 'i': {
-                cliConfig.interface = optarg; 
-                break;
+    auto opt = getopt(argc, argv, "hi:");
+    if (opt == EOF) {
+        printUsage();
+    } else {
+        do {
+            switch (opt) {
+                case 'i': {
+                    cliConfig.interface = optarg; 
+                    break;
+                }
+                case 'h':
+                default: {
+                    printUsage();
+                    break;
+                }
             }
-            default: {
-                printUsage();
-                break;
-            }
-        }
+        } while ((opt = getopt(argc, argv, "hi:")) != EOF);
     }
 
     return cliConfig;
